@@ -14,13 +14,15 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "placeholder-google-id",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "placeholder-google-secret",
+      allowDangerousEmailAccountLinking: true,
     }),
     LinkedInProvider({
       clientId: process.env.LINKEDIN_CLIENT_ID || "placeholder-linkedin-id",
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET || "placeholder-linkedin-secret",
       authorization: {
         params: { scope: 'openid profile email w_member_social' },
-      }
+      },
+      allowDangerousEmailAccountLinking: true,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -59,6 +61,12 @@ export const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET || "fallback-secret-for-development",
   callbacks: {
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub;
