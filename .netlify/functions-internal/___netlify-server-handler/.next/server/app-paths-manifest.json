@@ -1,0 +1,19 @@
+{
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(dashboard)/agents/page": "app/(dashboard)/agents/page.js",
+  "/(dashboard)/chat/page": "app/(dashboard)/chat/page.js",
+  "/(dashboard)/documents/page": "app/(dashboard)/documents/page.js",
+  "/(dashboard)/memory/page": "app/(dashboard)/memory/page.js",
+  "/(dashboard)/page": "app/(dashboard)/page.js",
+  "/(dashboard)/profile/page": "app/(dashboard)/profile/page.js",
+  "/(dashboard)/settings/page": "app/(dashboard)/settings/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/agents/route": "app/api/agents/route.js",
+  "/api/chats/[id]/messages/route": "app/api/chats/[id]/messages/route.js",
+  "/api/chats/route": "app/api/chats/route.js",
+  "/api/dashboard/route": "app/api/dashboard/route.js",
+  "/api/documents/route": "app/api/documents/route.js",
+  "/api/memory/route": "app/api/memory/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}
