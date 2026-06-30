@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "../auth/[...nextauth]/route"
 import { prisma } from "@/lib/prisma"
 
 export async function GET(request: Request) {
   try {
-    const userId = request.headers.get("X-User-Id")
-    if (!userId) {
+    const session = await getServerSession(authOptions)
+    if (!session || !session.user || !session.user.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const documents = await prisma.document.findMany({
-      where: { userId },
+      where: { userId: session.user.id },
       orderBy: { createdAt: "desc" },
     })
 
@@ -22,8 +24,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const userId = request.headers.get("X-User-Id")
-    if (!userId) {
+    const session = await getServerSession(authOptions)
+    if (!session || !session.user || !session.user.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
@@ -34,12 +36,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
+    // Connect document to user's organization if available
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id }
+    })
+
     const newDoc = await prisma.document.create({
       data: {
         name,
         type,
         size,
-        userId,
+        userId: session.user.id,
+        organizationId: user?.defaultOrganizationId || undefined
       }
     })
 
