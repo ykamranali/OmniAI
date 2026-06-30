@@ -65,6 +65,42 @@ export const authOptions = {
       if (user) {
         token.sub = user.id;
       }
+      
+      // Manually handle account linking since NextAuth v4 JWT + PrismaAdapter sometimes skips it
+      if (account && account.provider !== "credentials" && token.sub) {
+        const existingAccount = await prisma.account.findFirst({
+          where: { provider: account.provider, providerAccountId: account.providerAccountId }
+        });
+        
+        if (!existingAccount) {
+          await prisma.account.create({
+            data: {
+              userId: token.sub,
+              type: account.type,
+              provider: account.provider,
+              providerAccountId: account.providerAccountId,
+              access_token: account.access_token,
+              refresh_token: account.refresh_token,
+              expires_at: account.expires_at,
+              token_type: account.token_type,
+              scope: account.scope,
+              id_token: account.id_token,
+              session_state: account.session_state as string | undefined,
+            }
+          });
+        } else {
+          // Update tokens for existing account
+          await prisma.account.update({
+            where: { id: existingAccount.id },
+            data: {
+              access_token: account.access_token,
+              refresh_token: account.refresh_token,
+              expires_at: account.expires_at,
+            }
+          });
+        }
+      }
+      
       return token;
     },
     async session({ session, token }) {
