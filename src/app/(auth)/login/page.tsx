@@ -143,8 +143,8 @@ export default function LoginPage() {
               <button type="button" onClick={() => signIn('google', { callbackUrl: '/dashboard' })} className="flex-1 flex items-center justify-center gap-2 bg-gray-900 border border-gray-700 hover:bg-gray-800 py-2 rounded-md transition-colors text-sm font-medium">
                 <i className="bx bxl-google text-lg"></i> Google
               </button>
-              <button type="button" className="flex-1 flex items-center justify-center gap-2 bg-gray-900 border border-gray-700 hover:bg-gray-800 py-2 rounded-md transition-colors text-sm font-medium">
-                <i className="bx bxl-apple text-lg"></i> Apple
+              <button type="button" onClick={() => signIn('linkedin', { callbackUrl: '/dashboard' })} className="flex-1 flex items-center justify-center gap-2 bg-gray-900 border border-gray-700 hover:bg-gray-800 py-2 rounded-md transition-colors text-sm font-medium">
+                <i className="bx bxl-linkedin text-lg text-[#0a66c2]"></i> LinkedIn
               </button>
             </div>
 
