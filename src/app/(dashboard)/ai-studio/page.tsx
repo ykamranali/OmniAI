@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useCompletion } from 'ai/react';
+import { useCompletion } from '@ai-sdk/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -175,7 +175,7 @@ export default function AiStudioPage() {
                   <button className={`output-tab ${activeTab === 'generated' ? 'active' : ''}`} onClick={() => setActiveTab('generated')}>Generated Output</button>
                   <button className={`output-tab ${activeTab === 'history' ? 'active' : ''}`} onClick={() => setActiveTab('history')}>History</button>
                 </div>
-                {output && (
+                {completion && (
                   <button className="btn btn-secondary btn-sm" title="Copy Content" onClick={handleCopy}>
                     <i className="bx bx-copy"></i>
                   </button>
