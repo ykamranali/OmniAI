@@ -1,0 +1,59 @@
+# ==============================================================================
+# Omni Agent — LiteLLM model gateway configuration
+# Exposes an OpenAI-compatible API at /v1/chat/completions backed by whichever
+# providers you configure keys for, plus any local Ollama models.
+# ==============================================================================
+model_list:
+  # --- OpenAI ---
+  - model_name: gpt-4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+
+  - model_name: gpt-4o-mini
+    litellm_params:
+      model: openai/gpt-4o-mini
+      api_key: os.environ/OPENAI_API_KEY
+
+  # --- Anthropic ---
+  - model_name: claude-sonnet
+    litellm_params:
+      model: anthropic/claude-sonnet-4-5
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+  # --- Google ---
+  - model_name: gemini-pro
+    litellm_params:
+      model: gemini/gemini-1.5-pro
+      api_key: os.environ/GOOGLE_API_KEY
+
+  # --- DeepSeek ---
+  - model_name: deepseek-chat
+    litellm_params:
+      model: deepseek/deepseek-chat
+      api_key: os.environ/DEEPSEEK_API_KEY
+
+  # --- Local (Ollama) ---
+  - model_name: llama3.1
+    litellm_params:
+      model: ollama/llama3.1
+      api_base: os.environ/OLLAMA_BASE_URL
+
+  - model_name: codellama
+    litellm_params:
+      model: ollama/codellama
+      api_base: os.environ/OLLAMA_BASE_URL
+
+  - model_name: qwen2.5-coder
+    litellm_params:
+      model: ollama/qwen2.5-coder
+      api_base: os.environ/OLLAMA_BASE_URL
+
+litellm_settings:
+  drop_params: true
+  set_verbose: false
+  request_timeout: 120
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: null
