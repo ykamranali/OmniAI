@@ -59,13 +59,24 @@ docker-data/
 volumes/
 *.log
 
-# --- Legacy deploy configs (no longer used — Docker-based deploys now) -----
+# --- Legacy root-level app (superseded by frontend/ + backend/ monorepo) ---
+# These files predate the Omni Agent rebuild and could not be physically
+# deleted from this sandbox (mount disallows unlink) — they're harmless on
+# disk but excluded from git. Safe to delete by hand from the OS file
+# explorer if you want the working directory fully clean.
 .vercel
 .netlify
 vercel.json
 netlify.toml
 set-env.js
 test-gemini.mjs
+/package.json
+/package-lock.json
+/tsconfig.json
+/next.config.ts
+/postcss.config.mjs
+/eslint.config.mjs
+/next-env.d.ts
 
 # --- Sandbox scratch (undeletable stray files get parked here) -------------
 /.trash/
