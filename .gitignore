@@ -15,6 +15,8 @@ node_modules/
 /frontend/out/
 /frontend/build/
 /frontend/coverage/
+/.next/
+/.netlify/
 *.tsbuildinfo
 next-env.d.ts
 npm-debug.log*
@@ -64,6 +66,9 @@ vercel.json
 netlify.toml
 set-env.js
 test-gemini.mjs
+
+# --- Sandbox scratch (undeletable stray files get parked here) -------------
+/.trash/
 
 # --- Editors / OS -----------------------------------------------------------
 .DS_Store

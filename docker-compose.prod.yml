@@ -1,0 +1,67 @@
+# ==============================================================================
+# Omni Agent — production overrides
+# Usage: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# Hardens the base compose file for a VPS deployment: datastore ports are no
+# longer published to the host (only reachable on the internal omni-net
+# network), and every service gets conservative resource limits.
+# ==============================================================================
+services:
+  postgres:
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1g
+
+  redis:
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256m
+
+  qdrant:
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1g
+
+  minio:
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512m
+
+  ollama:
+    deploy:
+      resources:
+        limits:
+          memory: 8g
+
+  backend:
+    ports: []
+    environment:
+      ENVIRONMENT: production
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2g
+
+  frontend:
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1g
+
+  litellm:
+    ports: []
