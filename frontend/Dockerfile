@@ -17,7 +17,18 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NEXT_TELEMETRY_DISABLED=1
+
+# NEXT_PUBLIC_* vars are inlined into the client bundle at build time, so
+# they must be passed as build args (not just container env) to actually
+# take effect — plain `environment:` on the frontend service in
+# docker-compose.yml only affects the server-side runtime, not this build.
+ARG NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+ARG NEXT_PUBLIC_WS_URL=ws://localhost:8000/api/v1/ws
+ARG NEXT_PUBLIC_APP_NAME="Omni Agent"
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+    NEXT_PUBLIC_WS_URL=$NEXT_PUBLIC_WS_URL \
+    NEXT_PUBLIC_APP_NAME=$NEXT_PUBLIC_APP_NAME \
+    NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # ---- runner ----
