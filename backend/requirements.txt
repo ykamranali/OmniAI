@@ -1,41 +1,50 @@
 # ==============================================================================
 # Omni Agent — backend dependencies
+#
+# Version ranges (not exact pins) are used deliberately: this file was
+# authored without network access to a package index to test-resolve exact
+# pins against each other, so pip is given room to find a consistent set.
+# Once `pip install` succeeds for you, lock it down with:
+#   pip freeze > requirements.lock.txt
+# and switch this file (or a Dockerfile COPY) to install from the lock file
+# for fully reproducible builds.
 # ==============================================================================
-fastapi==0.115.6
-uvicorn[standard]==0.34.0
-pydantic==2.10.4
-pydantic-settings==2.7.1
+fastapi>=0.115,<0.116
+uvicorn[standard]>=0.34,<0.35
+pydantic>=2.9,<3
+pydantic-settings>=2.6,<3
 
 # Database
-sqlalchemy==2.0.36
-asyncpg==0.30.0
-alembic==1.14.0
-greenlet==3.1.1
+sqlalchemy>=2.0.36,<2.1
+asyncpg>=0.30,<0.31
+alembic>=1.13,<2
+greenlet>=3.1,<4
 
 # Auth / security
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-bcrypt==4.2.1
-python-multipart==0.0.20
-authlib==1.4.0
+python-jose[cryptography]>=3.3,<4
+passlib[bcrypt]>=1.7,<2
+bcrypt>=4.0,<5
+python-multipart>=0.0.18,<0.1
+authlib>=1.3,<2
 
 # Cache / queue
-redis==5.2.1
+redis>=5.0,<6
 
 # Vector DB
-qdrant-client==1.12.1
+qdrant-client>=1.11,<2
 
 # Object storage
-minio==7.2.13
+minio>=7.2,<8
 
 # AI / model gateway
-httpx==0.28.1
-litellm==1.56.4
+# httpx capped <0.28 because litellm requires httpx<0.28,>=0.23
+httpx>=0.27,<0.28
+litellm>=1.55,<2
 
 # Rate limiting
-slowapi==0.1.9
+slowapi>=0.1.9,<0.2
 
 # Utilities
-python-dotenv==1.0.1
-orjson==3.10.12
-tenacity==9.0.0
+python-dotenv>=1.0,<2
+orjson>=3.10,<4
+tenacity>=9.0,<10
