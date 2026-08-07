@@ -6,7 +6,11 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+# No committed package-lock.json yet (generate one with `npm install` locally
+# and switch this to `npm ci` for reproducible builds once you have it).
+# --legacy-peer-deps as a safety net for the React 19 / Radix / R3F dependency
+# tree, which wasn't resolved against a live npm registry before this build.
+RUN npm install --legacy-peer-deps
 
 # ---- builder ----
 FROM node:20-alpine AS builder
